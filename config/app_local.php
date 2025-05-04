@@ -95,15 +95,10 @@ return [
     /**
      * Google maps
      */
-    'App' => [
-        
-        'googleMapsApiKey' => 'AIzaSyAIuMZIwFJFb29WfnDPuZDNE43LceMKF14',
-    ],
+ 
 
     /**
      * Stripe Payment
      */
-    'Stripe' => [
-        'secret_key' => 'sk_test_51PnugqP7up497k8J17sGZdTgHcQ6lNHlRuQz8rY6CCpu9C9M17kDkdVtQHWekcijeYFuFlfLOjY4wYodwTXEHelP00ncf4PUM8'
-    ]
+
 ];
