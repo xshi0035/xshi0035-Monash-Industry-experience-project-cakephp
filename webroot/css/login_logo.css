@@ -1,0 +1,8 @@
+.login-logo {
+    display: block; /* Or inline-block, depending on your needs */
+    margin: 0 auto; /* This centers the logo in its container */
+    height: 100px; /* Adjust the height as needed */
+    width: auto; /* Keeps the logo's aspect ratio */
+    margin-bottom: 20px; /* Space between the logo and the form title */
+  }
+  

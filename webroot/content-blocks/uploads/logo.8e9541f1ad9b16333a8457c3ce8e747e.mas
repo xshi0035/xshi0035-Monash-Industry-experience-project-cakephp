@@ -1,0 +1,418 @@
+﻿// Template for assignment 2 - Strings - Tasks from 2.3 to 2.7
+//
+// Your assignment submission needs to be based on this template.
+//
+// Carefully read the instructions.
+//
+// You need to complete the subroutine and add a string to test the subroutine.
+//
+// Make sure all code is your own, and don't share any code
+// or code fragments with other students.
+
+
+
+/////////////////////////////////////////////////////
+/ Code for your main program to call the subroutine
+/////////////////////////////////////////////////////
+JnS JnSstorage2.7
+
+/ ... add code to call the soubroutines for the particular task
+
+
+/ Finish execution
+Halt
+
+
+/ Location of Input string to be printed
+
+PrintFrom,  HEX 047 / This is the start of the String.
+			HEX 061
+			HEX 062
+			HEX 072
+			HEX 069
+			HEX 065
+			HEX 06C
+            HEX 020
+			HEX 04D
+			HEX 061
+			HEX 06E
+			HEX 000
+ 
+
+
+
+
+///////////////////////////////////////////////
+/ Task 2.3 - Subroutine for printing strings
+///////////////////////////////////////////////
+
+
+subPrint, LoadI location
+		  Output
+		  load location
+		  add onedec
+		  store location
+		  LoadI location
+		  Skipcond 400
+		  jump subPrint / subroutine start
+		  JumpI JnSstorage2.3
+
+JnSstorage2.3, HEX 0
+Jump subPrint
+
+one, HEX 1
+
+/ ... add subroutine code from Task 2.3
+
+
+
+
+
+
+
+
+
+
+/ Location of Input string to be printed
+
+location, HEX 002
+HEX 003
+HEX 004
+HEX 005
+HEX 006
+HEX 007
+HEX 008
+HEX 009
+HEX 00A
+HEX 00B
+HEX 00C
+HEX 00D
+
+
+
+
+
+///////////////////////////////////////////////
+/ Task 2.4 - subroutine for string input
+///////////////////////////////////////////////
+
+Read, load originallocationaddress 	/ subroutine start
+store locationstorage
+
+inputread, load locationstorage
+Input
+StoreI locationstorage
+Skipcond 400
+jump incrementAddress
+JumpI JnSstorage2.4
+
+
+incrementAddress, load locationstorage
+add onedec
+store locationstorage
+jump inputread
+
+
+   
+JnSstorage2.4, HEX 0
+Jump Read
+
+
+
+
+address, adr locationstorage
+
+
+originallocationaddress, HEX 019
+
+
+
+locationstorage, HEX 000
+
+/ ... add Input subroutine
+
+onedec, DEC 1
+//////////////////////////////////////////////////
+/ Task 2.5 - subroutine to convert to lower case
+//////////////////////////////////////////////////
+
+subLowerCase, LoadI originallocationaddress / subroutine start
+Skipcond 400
+jump checkLargerthan91
+JumpI JnSstorage2.5
+
+checkLargerthan91, subt ninetyone
+Skipcond 000
+jump Output
+jump CheckSmallerThan65
+
+CheckSmallerThan65, subt sixtyfive
+skipcond 000
+jump Tolower
+jump Output
+
+
+
+
+
+
+subtraction, subt isitupper
+Skipcond 000
+jump Output
+jump Tolower
+
+
+
+
+Tolower, loadI originallocationaddress
+add twenty
+StoreI originallocationaddress
+jump Output
+
+
+
+
+Output, LoadI originallocationaddress
+Output
+load originallocationaddress
+add onedec 
+store originallocationaddress
+jump subLowerCase
+
+
+/ ... add Input subroutine
+
+
+JnSstorage2.5, HEX 0
+Jump subLowerCase
+
+
+isitupper, HEX 5B
+twenty, HEX 20
+ninetyone, DEC 91
+sixtyfive, DEC 65
+
+//////////////////////////////////////
+/ Task 2.6 - subroutine for ROT13
+//////////////////////////////////////
+
+subROT13, loadI addressfor2.6     / subroutine start
+Skipcond 400
+jump continue
+JumpI JnSstorage2.6
+
+
+
+continue, subt oneonezero
+Skipcond 000
+Jump largerthan109
+jump smallerthan109
+
+
+
+
+smallerthan109, LoadI addressfor2.6
+subt nintyseven
+Skipcond 000
+jump largerthan96
+LoadI addressfor2.6
+Output
+load addressfor2.6
+add onedec
+store addressfor2.6
+jump subROT13
+
+
+
+
+
+largerthan96, LoadI addressfor2.6
+add thirteen
+Output
+load addressfor2.6
+add onedec
+store addressfor2.6
+jump subROT13
+
+
+
+
+
+/ ... add Input subroutine
+
+
+largerthan109, loadI addressfor2.6
+subt onetwothree
+Skipcond 000
+jump largerthan123
+jump smallerthan123
+
+
+largerthan123, loadI addressfor2.6
+Output
+load addressfor2.6
+add onedec
+store addressfor2.6
+jump subROT13
+
+
+smallerthan123, loadI addressfor2.6
+subt thirteen
+Output
+load addressfor2.6
+add onedec
+store addressfor2.6
+jump subROT13
+
+
+addressfor2.6, HEX 019
+thirteen, DEC 13
+oneonezero, DEC 110
+nintyseven, DEC 97
+onetwothree, DEC 123
+
+JnSstorage2.6, HEX 0
+JnS JnSstorage2.4
+Jump subROT13
+
+
+
+///////////////////////////////////////////////////////////////////////
+/ Task 2.7 - alternative subroutine for ROT13 with special characters
+///////////////////////////////////////////////////////////////////////
+
+//use 2.4 subroutine
+subSROT13, JnS JnSstorage2.4	/ subroutine start
+Jump subLowerCase2.7
+
+//check if 0 (first check)
+subLowerCase2.7, LoadI originallocationaddress 
+Skipcond 400
+jump checkLargerthan912.7
+Jump subROT132.7
+
+//check if the value is larger than 91 if no then check if captial letter
+checkLargerthan912.7, LoadI originallocationaddress
+subt ninetyone
+Skipcond 000
+Jump subROT132.7
+jump CheckSmallerThan652.7
+
+//check if the value is within captial character range in ASCII table
+//if yes make it to lower case
+CheckSmallerThan652.7, LoadI originallocationaddress
+subt sixtyfive
+skipcond 000
+jump Tolower2.7
+Jump subROT132.7
+
+
+
+
+
+
+
+
+
+
+//convert it to lower case
+Tolower2.7, loadI originallocationaddress
+add twenty
+StoreI originallocationaddress
+Jump subROT132.7
+
+//check if 0 (second check just in case)
+subROT132.7, loadI originallocationaddress     
+Skipcond 400
+jump continue2.7
+JumpI JnSstorage2.7
+
+
+//check if value is larger than 110 (refer to ASCII table)
+//as if value larger than 110 it will have to be loop back to "a"
+continue2.7, subt oneonezero
+Skipcond 000
+Jump largerthan1092.7
+jump smallerthan1092.7
+
+
+
+//check if the value is within the lowercase character in ASCII table if not print it out
+smallerthan1092.7, LoadI originallocationaddress
+subt nintyseven
+Skipcond 000
+jump largerthan962.7
+LoadI originallocationaddress
+Output
+load originallocationaddress
+add onedec
+store originallocationaddress
+Jump subLowerCase2.7
+
+
+
+
+//output the value after adding 13 and add one to display value in next memory address
+largerthan962.7, LoadI originallocationaddress
+add thirteen
+Output
+load originallocationaddress
+add onedec
+store originallocationaddress
+Jump subLowerCase2.7
+
+
+
+
+
+/ ... add Input subroutine
+
+//if it is larger check if it is within the lowercase range in ASCII table
+largerthan1092.7, loadI originallocationaddress
+subt onetwothree
+Skipcond 000
+jump largerthan1232.7
+jump smallerthan1232.7
+
+//if not output it and add one to access next memory location
+largerthan1232.7, loadI originallocationaddress
+Output
+load originallocationaddress
+add onedec
+store originallocationaddress
+Jump subLowerCase2.7
+
+//if yes minus 13 to display that value and add one to access next memory location 
+smallerthan1232.7, loadI originallocationaddress
+subt thirteen
+Output
+load originallocationaddress
+add onedec
+store originallocationaddress
+Jump subLowerCase2.7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//store JnS address
+JnSstorage2.7, HEX 0
+Jump subSROT13
+/ ... add Input subroutine
